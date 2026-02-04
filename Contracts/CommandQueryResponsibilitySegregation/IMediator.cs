@@ -11,13 +11,10 @@ public interface IMediator
     /// <param name="cancellationToken">
     ///     A token to observe while waiting for the operation to complete.
     /// </param>
-    /// <typeparam name="TResponse">
-    ///     Placeholder type parameter for command execution.
-    /// </typeparam>
     /// <returns>
     ///     A <see cref="ValueTask"/> representing the asynchronous operation.
     /// </returns>
-    ValueTask Send<TResponse>(ICommand command, CancellationToken cancellationToken = default);
+    ValueTask Send(ICommand command, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Sends a command that returns a response.
@@ -65,5 +62,13 @@ public interface IMediator
     /// <returns>
     ///     A task that represents the asynchronous publish operation.
     /// </returns>
-    ValueTask Publish(IDomainEvent domainEvent, CancellationToken cancellationToken = default);
+    Task Publish(IDomainEvent domainEvent, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="domainEvent"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TEvent"></typeparam>
+    /// <returns></returns>
+    Task Publish<TEvent>(TEvent domainEvent, CancellationToken cancellationToken = default) where TEvent : IDomainEvent;
 }

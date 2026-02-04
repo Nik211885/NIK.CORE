@@ -8,7 +8,7 @@ namespace NIK.CORE.DOMAIN.Contracts.CommandQueryResponsibilitySegregation;
 /// <typeparam name="TResponse">
 ///     Type of the response returned by the handler.
 /// </typeparam>
-public delegate Task<TResponse> RequestHandlerDelegate<TResponse>();
+public delegate ValueTask<TResponse> RequestHandlerDelegate<TResponse>();
 /// <summary>
 ///     Defines a pipeline behavior that allows executing logic
 ///     before and/or after the request handler is invoked.
@@ -39,7 +39,7 @@ public interface IPipelineBehavior<in TRequest, TResponse>
     ///     A task that represents the asynchronous operation
     ///     and contains the handler response.
     /// </returns>
-    Task<TResponse> Handle(
+    ValueTask<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken = default);
 }

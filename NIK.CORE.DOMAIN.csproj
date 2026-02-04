@@ -14,9 +14,4 @@
     <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\ExtendServices\" />
-    <Folder Include="Implements\ExtendServices\" />
-  </ItemGroup>
-
 </Project>
