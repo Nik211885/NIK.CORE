@@ -6,7 +6,7 @@ namespace NIK.CORE.DOMAIN.Helpers;
 
 /// <summary>
 /// JsonConverterFactory for all TypedIdValueBase-derived types.
-/// This factory dynamically creates a generic TypeIdJsonConverter<T>
+/// This factory dynamically creates a generic TypeIdJsonConverter
 /// at runtime based on the concrete TypeId type being serialized/deserialized.
 /// </summary>
 public class TypeIdJsonConverterFactory : JsonConverterFactory
@@ -23,7 +23,6 @@ public class TypeIdJsonConverterFactory : JsonConverterFactory
     {
         return typeof(TypedIdValueBase).IsAssignableFrom(typeToConvert);
     }
-
     /// <summary>
     /// Creates a JsonConverter for the specified TypedId type.
     /// </summary>
