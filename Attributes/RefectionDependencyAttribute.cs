@@ -11,7 +11,7 @@ namespace NIK.CORE.DOMAIN.Attributes;
 ///     to determine the service lifetime when registering dependencies.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Interface)]
-public class ReflectionDependencyAttribute : Attribute
+public sealed class ReflectionDependencyAttribute : Attribute
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ReflectionDependencyAttribute"/> class.

@@ -14,7 +14,7 @@
 ///     such as caching providers, payment providers, or storage engines.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Class)]
-public class NameKeyDependencyAttribute : Attribute
+public sealed class NameKeyDependencyAttribute : Attribute
 {
     /// <summary>
     ///     Gets the name key associated with the dependency.

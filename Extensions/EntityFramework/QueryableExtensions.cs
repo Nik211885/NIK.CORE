@@ -1,5 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq.Expressions;
+using System.Reflection;
+using NIK.CORE.DOMAIN.Attributes;
 
 namespace NIK.CORE.DOMAIN.Extensions.EntityFramework;
 
@@ -56,7 +58,7 @@ public static class QueryableExtensions
             if (!targetProp.CanWrite)
                 continue;
             var sourceProp = sourceType.GetProperty(targetProp.Name);
-            if (sourceProp is null || !sourceProp.CanRead)
+            if (sourceProp is null || !sourceProp.CanRead || sourceProp.GetCustomAttribute<IgnoreMappingAttribute>() is null)
                 continue;
             if (!targetProp.PropertyType.IsAssignableFrom(sourceProp.PropertyType))
                 continue;
