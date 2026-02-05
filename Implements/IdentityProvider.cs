@@ -46,6 +46,11 @@ public class IdentityProvider : IIdentityProvider
     /// </returns>
     public bool IsInRole(string role)
         => User?.IsInRole(role) ?? false;
+    /// <summary>
+    ///  Get Ip address from request
+    /// </summary>
+    public string IpAddress 
+        => _contextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
 
     /// <summary>
     ///     Determines whether the current user has the specified permission.

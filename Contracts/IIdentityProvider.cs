@@ -33,7 +33,10 @@ public interface IIdentityProvider
     ///     True if the user is in the specified role; otherwise, false.
     /// </returns>
     bool IsInRole(string role);
-
+    /// <summary>
+    ///  Get Ip address from request
+    /// </summary>
+    string IpAddress { get; }
     /// <summary>
     ///     Determines whether the current user has the specified permission.
     /// </summary>
