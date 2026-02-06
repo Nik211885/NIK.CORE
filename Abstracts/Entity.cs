@@ -1,4 +1,4 @@
-﻿using NIK.CORE.DOMAIN.Contracts.CommandQueryResponsibilitySegregation;
+﻿using NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation.Contracts;
 
 namespace NIK.CORE.DOMAIN.Abstracts;
 

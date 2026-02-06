@@ -1,9 +1,8 @@
-﻿using System.Linq.Expressions;
-using Microsoft.Extensions.DependencyInjection;
-using NIK.CORE.DOMAIN.Contracts.Caching;
-using NIK.CORE.DOMAIN.Enums;
-using NIK.CORE.DOMAIN.Implements.Caching;
-using NIK.CORE.DOMAIN.Models.Configs.Caching;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NIK.CORE.DOMAIN.Caching.ConfigModels;
+using NIK.CORE.DOMAIN.Caching.Contracts;
+using NIK.CORE.DOMAIN.Caching.Enums;
+using NIK.CORE.DOMAIN.Caching.Implements; 
 using StackExchange.Redis;
 
 namespace NIK.CORE.DOMAIN.Extensions.Dependency;

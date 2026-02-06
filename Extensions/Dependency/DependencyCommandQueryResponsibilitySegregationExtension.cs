@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using NIK.CORE.DOMAIN.Contracts.CommandQueryResponsibilitySegregation;
-using NIK.CORE.DOMAIN.Implements.CommandQueryResponsibilitySegregation;
-
+using NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation;
+using NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation.Contracts;
 namespace NIK.CORE.DOMAIN.Extensions.Dependency;
 
 /// <summary>
@@ -31,7 +30,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     This method scans the provided assembly (or the calling assembly by default)
         ///     to automatically discover and register implementations of:
         ///     <list type="bullet">
-        ///         <item><see cref="IBaseHandler{TRequest, TResponse}"/></item>
+        ///         <item><see cref="IBaseHandler{TRequest,TResponse}"/></item>
         ///         <item><see cref="IDomainEventHandler{TEvent}"/></item>
         ///     </list>
         ///     </para>
