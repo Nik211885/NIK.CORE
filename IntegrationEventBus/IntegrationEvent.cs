@@ -1,4 +1,4 @@
-﻿namespace NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation;
+﻿namespace NIK.CORE.DOMAIN.IntegrationEventBus;
 
 /// <summary>
 ///     Base class representing an integration event

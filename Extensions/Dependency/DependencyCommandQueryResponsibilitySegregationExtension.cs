@@ -2,6 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation;
 using NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation.Contracts;
+using NIK.CORE.DOMAIN.IntegrationEventBus;
+using NIK.CORE.DOMAIN.Pipelines.PipesMediator;
+
 namespace NIK.CORE.DOMAIN.Extensions.Dependency;
 
 /// <summary>
@@ -111,7 +114,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     injection container by scanning the specified assembly.
         ///     <para>
         ///     All concrete classes that implement
-        ///     <see cref="IIntegrationEventHandler{TEvent}"/> will be
+        ///     <see cref="IIntegrationEventHandler{TIntegrationEvent}"/> will be
         ///     automatically registered.
         ///     </para>
         ///     <para>
@@ -175,6 +178,50 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
             return serviceCollection;
         }
         /// <summary>
+        /// Registers core mediator pipeline behaviors used across the application.
+        /// </summary>
+        /// <remarks>
+        /// This method adds cross-cutting pipeline behaviors such as:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <description>
+        ///     <see cref="CoreValidationPipelineBehavior{TCommand, TResponse}"/> – 
+        ///     validates commands before they reach their handlers.
+        ///     </description>
+        ///   </item>
+        /// </list>
+        /// </remarks>
+        /// <returns>
+        /// The current <see cref="IServiceCollection"/> instance for chaining.
+        /// </returns>
+        IServiceCollection AddCorePipelineBehaviors(Assembly? assembly)
+        {
+            assembly ??= Assembly.GetExecutingAssembly();
+            serviceCollection.AddScoped(typeof(IPipelineBehavior<,>), typeof(CoreValidationPipelineBehavior<,>));
+            // just support one transaction for one each project with single database
+            var typeOfBaseTransactionBehavior = typeof(BaseTransactionScopePipelineBehavior<,>);
+            // get transaction behavior implementation for each project and add to services collection
+            var transactionBehaviors = assembly
+                .GetTypes()
+                .Where(t => t is { IsAbstract: false, IsInterface: false } &&
+                    IsSubclassOfRawGeneric( typeof(BaseTransactionScopePipelineBehavior<,>), t))
+                .ToList();
+            if (transactionBehaviors.Count > 1)
+            {
+                throw new InvalidOperationException(
+                    $"Only one TransactionScopePipelineBehavior is allowed per project. " +
+                    $"Found: {string.Join(", ", transactionBehaviors.Select(t => t.Name))}");
+            }
+            if (transactionBehaviors.Count == 1)
+            {
+                serviceCollection.AddScoped(
+                    typeof(IPipelineBehavior<,>),
+                    transactionBehaviors[0]);
+            }
+            return serviceCollection;
+        }
+        
+        /// <summary>
         ///     Scans an assembly and registers all concrete implementations
         ///     of a given open generic interface.
         ///     <para>
@@ -218,5 +265,20 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
             }
             return serviceCollection;
         }
+    }
+    private static bool IsSubclassOfRawGeneric(Type generic, Type? toCheck)
+    {
+        while (toCheck != null && toCheck != typeof(object))
+        {
+            var current = toCheck.IsGenericType
+                ? toCheck.GetGenericTypeDefinition()
+                : toCheck;
+
+            if (current == generic)
+                return true;
+
+            toCheck = toCheck.BaseType!;
+        }
+        return false;
     }
 }

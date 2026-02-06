@@ -1,15 +1,14 @@
 ﻿using NIK.CORE.DOMAIN.Abstracts;
 
-namespace NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation.Contracts;
+namespace NIK.CORE.DOMAIN.IntegrationEventBus;
 
 /// <summary>
 ///     Defines a handler for processing integration events.
 /// </summary>
-/// <typeparam name="TIntegrationEvent">
+/// <typeparam name="TYpeMessage">
 ///     Type of the integration event to handle.
 /// </typeparam>
-public interface IIntegrationEventHandler<in TIntegrationEvent>
-    where TIntegrationEvent : IntegrationEvent
+public interface IIntegrationEventHandler<in TYpeMessage>
 {
     /// <summary>
     ///     Handles the specified integration event.
@@ -23,5 +22,5 @@ public interface IIntegrationEventHandler<in TIntegrationEvent>
     /// <returns>
     ///     A task that represents the asynchronous handling operation.
     /// </returns>
-    Task Handle(TIntegrationEvent @event, CancellationToken cancellationToken = default);
+    Task Handle(TYpeMessage @event, CancellationToken cancellationToken = default);
 }

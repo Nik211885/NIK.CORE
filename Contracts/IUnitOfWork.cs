@@ -1,4 +1,7 @@
-﻿namespace NIK.CORE.DOMAIN.Contracts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NIK.CORE.DOMAIN.Attributes;
+
+namespace NIK.CORE.DOMAIN.Contracts;
 
 /// <summary>
 ///     Represents a unit of work.
@@ -18,7 +21,6 @@ public interface IUnitOfWork : IAsyncDisposable
     ///     A task that represents the asynchronous operation.
     /// </returns>
     Task BeginTransactionAsync(CancellationToken cancellationToken);
-
     /// <summary>
     ///     Persists all pending changes to the database.
     /// </summary>
@@ -29,7 +31,6 @@ public interface IUnitOfWork : IAsyncDisposable
     ///     The number of state entries written to the database.
     /// </returns>
     Task<int> SaveChangeAsync(CancellationToken cancellationToken);
-
     /// <summary>
     ///     Commits the current transaction.
     ///     All changes will be permanently applied to the database.
@@ -42,7 +43,6 @@ public interface IUnitOfWork : IAsyncDisposable
     ///     A task that represents the asynchronous operation.
     /// </returns>
     Task CommitTransactionAsync(CancellationToken cancellationToken);
-
     /// <summary>
     ///     Rolls back the current transaction,
     ///     discarding all changes made during the transaction.
@@ -54,4 +54,27 @@ public interface IUnitOfWork : IAsyncDisposable
     ///     A task that represents the asynchronous operation.
     /// </returns>
     Task RollbackTransactionAsync(CancellationToken cancellationToken);
+    /// <summary>
+    /// Gets the identifier of the currently active transaction, if any.
+    /// </summary>
+    /// <remarks>
+    /// Returns <c>null</c> when no transaction is currently in progress.
+    /// This value can be used for logging, diagnostics, or transaction correlation.
+    /// </remarks>
+    Guid CurrentTransactionId { get; }
+    /// <summary>
+    /// Executes the specified asynchronous action using a resilient execution strategy.
+    /// </summary>
+    /// <remarks>
+    /// This method wraps the provided action with an execution strategy that may
+    /// automatically handle transient failures (such as retries) depending on
+    /// the underlying implementation (e.g., database retry policies).
+    /// </remarks>
+    /// <param name="action">
+    /// The asynchronous operation to be executed within the execution strategy.
+    /// </param>
+    /// <returns>
+    /// A task that represents the asynchronous execution of the provided action.
+    /// </returns>
+    Task ExecutionStrategyAsync(Func<Task> action);
 }

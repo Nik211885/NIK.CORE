@@ -7,7 +7,7 @@ namespace NIK.CORE.DOMAIN.Validator;
 /// <typeparam name="T">
 /// The type of object being validated.
 /// </typeparam>
-public abstract class AbstractValidator<T>
+public abstract class AbstractValidator<T> : IValidator<T>
 {
     private readonly List<IValidationRule<T>> _rules = [];
 

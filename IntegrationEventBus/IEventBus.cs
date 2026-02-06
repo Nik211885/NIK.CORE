@@ -1,16 +1,13 @@
-﻿using NIK.CORE.DOMAIN.Abstracts;
-
-namespace NIK.CORE.DOMAIN.CommandQueryResponsibilitySegregation.Contracts;
+﻿namespace NIK.CORE.DOMAIN.IntegrationEventBus;
 
 /// <summary>
 ///     Defines an event bus for publishing integration events
 ///     to communicate across different bounded contexts.
 /// </summary>
-/// <typeparam name="TIntegrationEventBus">
+/// <typeparam name="TYpeMessage">
 ///     Type of the integration event.
 /// </typeparam>
-public interface IEventBus<in TIntegrationEventBus>
-    where TIntegrationEventBus : IntegrationEvent
+public interface IEventBus<in TYpeMessage>
 {
     /// <summary>
     ///     Publishes an integration event to the event bus.
@@ -24,5 +21,5 @@ public interface IEventBus<in TIntegrationEventBus>
     /// <returns>
     ///     A task that represents the asynchronous publish operation.
     /// </returns>
-    Task Publish(TIntegrationEventBus @event, CancellationToken cancellation = default);
+    Task Publish(TYpeMessage @event, CancellationToken cancellation = default);
 }
