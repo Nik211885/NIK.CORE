@@ -25,7 +25,7 @@ public static class DependencyCachingExtension
         /// <returns>
         ///     The current <see cref="IServiceCollection"/> instance.
         /// </returns>
-        IServiceCollection AddMemoryCaching()
+        public IServiceCollection AddMemoryCaching()
         {
             serviceCollection.AddSingleton<ICache, MemoryCache>();
             return serviceCollection;
@@ -40,7 +40,7 @@ public static class DependencyCachingExtension
         /// <returns>
         ///     The current <see cref="IServiceCollection"/> instance.
         /// </returns>
-        IServiceCollection AddRedisCache(Action<RedisConfigs> redisConfig)
+        public IServiceCollection AddRedisCache(Action<RedisConfigs> redisConfig)
         {
             var config = new RedisConfigs();
             redisConfig.Invoke(config);
@@ -57,7 +57,7 @@ public static class DependencyCachingExtension
         /// <returns>
         ///     The current <see cref="IServiceCollection"/> instance.
         /// </returns>
-        IServiceCollection AddRedisCache(RedisConfigs redisConfig)
+        public IServiceCollection AddRedisCache(RedisConfigs redisConfig)
         {
             serviceCollection.AddSingleton<ICache, RedisCache>();
             serviceCollection.AddRedisConnectionMultiplexer(redisConfig);
@@ -82,7 +82,7 @@ public static class DependencyCachingExtension
         /// <returns>
         ///     The current <see cref="IServiceCollection"/> instance.
         /// </returns>
-        IServiceCollection AddCaching(Action<ActionCachingConfig> action)
+        public IServiceCollection AddCaching(Action<ActionCachingConfig> action)
         {
             var config = new ActionCachingConfig();
             action.Invoke(config);

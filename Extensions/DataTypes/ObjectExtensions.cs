@@ -16,7 +16,7 @@ public static class ObjectExtensions
         /// </summary>
         /// <typeparam name="T">Target type with parameterless constructor.</typeparam>
         /// <returns>Mapped instance of <typeparamref name="T"/>.</returns>
-        T ReflectionMapTo<T>() where T : new()
+        public T ReflectionMapTo<T>() where T : new()
         {
             ArgumentNullException.ThrowIfNull(obj);
             var sourceType = obj.GetType();
@@ -41,14 +41,14 @@ public static class ObjectExtensions
         /// <returns>
         /// <c>true</c> if the object is null; otherwise, <c>false</c>.
         /// </returns>
-        bool IsNull() => obj is null;
+        public bool IsNull() => obj is null;
         /// <summary>
         /// Determines whether the object is not null.
         /// </summary>
         /// <returns>
         /// <c>true</c> if the object is not null; otherwise, <c>false</c>.
         /// </returns>
-        bool NotNull() => obj is not null;
+        public bool NotNull() => obj is not null;
         /// <summary>
         /// Returns the object cast to <typeparamref name="T"/> if possible;
         /// otherwise returns the specified default value.
@@ -58,7 +58,7 @@ public static class ObjectExtensions
         /// <returns>
         /// The cast value or <paramref name="defaultValue"/>.
         /// </returns>
-        T GetOrDefault<T>(T defaultValue = default!)
+        public T GetOrDefault<T>(T defaultValue = default!)
             => obj is T t ? t : defaultValue;
         /// <summary>
         /// Determines whether the object is of type <typeparamref name="T"/>.
@@ -67,14 +67,14 @@ public static class ObjectExtensions
         /// <returns>
         /// <c>true</c> if the object is of type <typeparamref name="T"/>; otherwise, <c>false</c>.
         /// </returns>
-        bool Is<T>() => obj is T;
+        public bool Is<T>() => obj is T;
         /// <summary>
         /// Throws an <see cref="ArgumentNullException"/> if the object is null.
         /// </summary>
         /// <param name="name">
         /// The name of the parameter to include in the exception.
         /// </param>
-        void ThrowIfNull(string? name = null)
+        public void ThrowIfNull(string? name = null)
             => ArgumentNullException.ThrowIfNull(obj, name);
         /// <summary>
         /// Determines whether the object has a meaningful value.
@@ -85,7 +85,7 @@ public static class ObjectExtensions
         /// <returns>
         /// <c>true</c> if the object has a value; otherwise, <c>false</c>.
         /// </returns>
-        bool HasValue()
+        public bool HasValue()
             => obj switch
             {
                 null => false,

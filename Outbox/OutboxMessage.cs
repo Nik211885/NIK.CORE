@@ -80,6 +80,10 @@ public class OutboxMessage
     /// for diagnostics and troubleshooting purposes.
     /// </remarks>
     public string? Error { get; set; }
+    /// <summary>
+    ///    Time to created outbox message
+    /// </summary>
+    public DateTime CreatedOnUtc { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OutboxMessage"/> class.

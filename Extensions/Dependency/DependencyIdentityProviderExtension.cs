@@ -30,7 +30,7 @@ public static class DependencyIdentityProviderExtension
         ///     The current <see cref="IServiceCollection"/> instance
         ///     to allow fluent chaining.
         /// </returns>
-        IServiceCollection AddIdentityProvider()
+        public IServiceCollection AddIdentityProvider()
         {
             serviceCollection.AddHttpContextAccessor();
             serviceCollection.AddSingleton<IIdentityProvider, IdentityProvider>();

@@ -22,7 +22,7 @@ public static class DependencyInjectionExtensions
         /// <param name="registerFrom">The assembly containing the decorated interfaces. Defaults to the calling assembly.</param>
         /// <param name="implementationFrom">The assembly containing the concrete implementation classes. Defaults to the calling assembly.</param>
         /// <returns>The <see cref="IServiceCollection"/> for further configuration chaining.</returns>
-        IServiceCollection AddReflectionServices(
+        public IServiceCollection AddReflectionServices(
             Assembly? registerFrom = null, 
             Assembly? implementationFrom = null)
         {

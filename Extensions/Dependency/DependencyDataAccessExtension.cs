@@ -42,7 +42,7 @@ public static class DependencyDataAccessExtension
         /// <exception cref="NotImplementedException">
         /// Thrown when a configured database type is not supported.
         /// </exception>
-        IServiceCollection AddDataAccessSqlConnection(
+        public IServiceCollection AddDataAccessSqlConnection(
             Action<DataAccessConfigs> configuration)
         {
             var configs = new DataAccessConfigs();

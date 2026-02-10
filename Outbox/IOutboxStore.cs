@@ -88,7 +88,7 @@ public interface IOutboxStore
     /// <param name="cancellationToken">
     /// A token used to cancel the asynchronous operation.
     /// </param>
-    Task DeleteProcessedMessagesAsync(
+    Task<int> DeleteProcessedMessagesAsync(
         DateTime olderThan,
         CancellationToken cancellationToken = default);
 }

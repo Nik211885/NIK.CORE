@@ -19,7 +19,7 @@ public static class EnumExtensions
         /// <returns>
         /// The description defined on the enum type, or an empty string if not found.
         /// </returns>
-        string GetDescription()
+        public string GetDescription()
         {
             var attributeDescription =
                 @enum.GetType().GetCustomAttribute<DescriptionAttribute>();

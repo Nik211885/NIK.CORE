@@ -29,7 +29,7 @@ public static class QueryableExtensions
         /// An <see cref="IQueryable{T}"/> that can be translated by LINQ providers
         /// such as Entity Framework.
         /// </returns>
-        IQueryable<T> MapTo<T>() where T : new()
+        public IQueryable<T> MapTo<T>() where T : new()
         {
             var key = (typeof(TE), typeof(T));
             if (!Cache.TryGetValue(key, out var cached))

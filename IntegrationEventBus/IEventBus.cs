@@ -4,10 +4,7 @@
 ///     Defines an event bus for publishing integration events
 ///     to communicate across different bounded contexts.
 /// </summary>
-/// <typeparam name="TYpeMessage">
-///     Type of the integration event.
-/// </typeparam>
-public interface IEventBus<in TYpeMessage>
+public interface IEventBus
 {
     /// <summary>
     ///     Publishes an integration event to the event bus.
@@ -21,5 +18,13 @@ public interface IEventBus<in TYpeMessage>
     /// <returns>
     ///     A task that represents the asynchronous publish operation.
     /// </returns>
-    Task Publish(TYpeMessage @event, CancellationToken cancellation = default);
+    Task Publish<TYpeMessage>(TYpeMessage @event, CancellationToken cancellation = default);  
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mess"></param>
+    /// <param name="eventType"></param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    Task Publish(object mess, Type eventType, CancellationToken cancellation = default);
 }

@@ -47,7 +47,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     Default is <see cref="ServiceLifetime.Scoped"/>.
         /// </param>
         /// <returns>The current <see cref="IServiceCollection"/> instance.</returns>
-        IServiceCollection AddMediator( Assembly? assembly = null, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        public IServiceCollection AddMediator( Assembly? assembly = null, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             assembly ??= Assembly.GetCallingAssembly();
             serviceCollection.AddMediatorHandler(lifetime);
@@ -69,7 +69,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     The service lifetime of the registered handlers.
         /// </param>
         /// <returns>The current <see cref="IServiceCollection"/> instance.</returns>
-        IServiceCollection AddHandlers( Assembly? assembly = null, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        public IServiceCollection AddHandlers( Assembly? assembly = null, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             assembly ??= Assembly.GetCallingAssembly();
             serviceCollection.AddImplementationByInterfaceFromScanAssembly( typeof(IBaseHandler<,>), assembly, lifetime);
@@ -89,7 +89,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     The service lifetime of the registered handlers.
         /// </param>
         /// <returns>The current <see cref="IServiceCollection"/> instance.</returns>
-        IServiceCollection AddDomainEvents(Assembly? assembly = null, ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        public IServiceCollection AddDomainEvents(Assembly? assembly = null, ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             assembly ??= Assembly.GetCallingAssembly();
             serviceCollection.AddImplementationByInterfaceFromScanAssembly( typeof(IDomainEventHandler<>), assembly, lifetime);
@@ -103,7 +103,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     Default is <see cref="ServiceLifetime.Scoped"/>.
         /// </param>
         /// <returns>The current <see cref="IServiceCollection"/> instance.</returns>
-        IServiceCollection AddMediatorHandler(ServiceLifetime lifetime = ServiceLifetime.Scoped)
+        public IServiceCollection AddMediatorHandler(ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             var descriptor = new ServiceDescriptor( typeof(IMediator), typeof(Mediator), lifetime);
             serviceCollection.Add(descriptor);
@@ -139,7 +139,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     The current <see cref="IServiceCollection"/> instance
         ///     to allow fluent chaining.
         /// </returns>
-        IServiceCollection AddIntegrationEvents(
+        public IServiceCollection AddIntegrationEvents(
             Assembly? assembly = null,
             ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
@@ -169,7 +169,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     The current <see cref="IServiceCollection"/> instance
         ///     to allow fluent chaining.
         /// </returns>
-        IServiceCollection AddPipelineBehaviors(params Type[] pipeLines)
+        public IServiceCollection AddPipelineBehaviors(params Type[] pipeLines)
         {
             foreach (var p in pipeLines)
             {
@@ -194,12 +194,11 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         /// <returns>
         /// The current <see cref="IServiceCollection"/> instance for chaining.
         /// </returns>
-        IServiceCollection AddCorePipelineBehaviors(Assembly? assembly)
+        public IServiceCollection AddCorePipelineBehaviors(Assembly? assembly)
         {
             assembly ??= Assembly.GetExecutingAssembly();
             serviceCollection.AddScoped(typeof(IPipelineBehavior<,>), typeof(CoreValidationPipelineBehavior<,>));
             // just support one transaction for one each project with single database
-            var typeOfBaseTransactionBehavior = typeof(BaseTransactionScopePipelineBehavior<,>);
             // get transaction behavior implementation for each project and add to services collection
             var transactionBehaviors = assembly
                 .GetTypes()
@@ -243,7 +242,7 @@ public static class DependencyCommandQueryResponsibilitySegregationExtension
         ///     The service lifetime of the registered implementations.
         /// </param>
         /// <returns>The current <see cref="IServiceCollection"/> instance.</returns>
-        IServiceCollection AddImplementationByInterfaceFromScanAssembly(Type scanInterfaceType, Assembly? assembly = null, 
+        public IServiceCollection AddImplementationByInterfaceFromScanAssembly(Type scanInterfaceType, Assembly? assembly = null, 
             ServiceLifetime lifetime = ServiceLifetime.Scoped)
         {
             assembly ??= Assembly.GetCallingAssembly();

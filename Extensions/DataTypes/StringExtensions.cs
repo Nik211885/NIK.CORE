@@ -19,7 +19,7 @@ public static class StringExtensions
         ///     Generates a slug in the format: randomPart/normalized-text.
         /// </summary>
         /// <returns>A URL-safe slug string.</returns>
-        string GeneratorSlug()
+        public string GeneratorSlug()
         {
             var prefix = StringHelpers.GenerateRandomPart(6);
             var suffix = value.GenerateSlugPart();
@@ -29,7 +29,7 @@ public static class StringExtensions
         ///     Converts input text into a URL-friendly slug.
         /// </summary>
         /// <returns>Normalized slug text.</returns>
-        string GenerateSlugPart()
+        public string GenerateSlugPart()
         {
             if (string.IsNullOrWhiteSpace(value))
                 return string.Empty;
