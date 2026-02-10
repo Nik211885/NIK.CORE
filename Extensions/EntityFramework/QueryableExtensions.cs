@@ -1,7 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using NIK.CORE.DOMAIN.Attributes;
+using NIK.CORE.DOMAIN.Extensions.EntityFramework.Models;
 
 namespace NIK.CORE.DOMAIN.Extensions.EntityFramework;
 
@@ -38,6 +40,39 @@ public static class QueryableExtensions
                 Cache[key] = cached;
             }
             return queryable.Select((Expression<Func<TE, T>>)cached);
+        }
+        /// <summary>
+        /// Executes a paginated query and returns a paginated result set.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The destination type of the projected items.
+        /// </typeparam>
+        /// <param name="pageRequest">
+        /// The pagination parameters including page number and page size.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A token to monitor for cancellation requests.
+        /// </param>
+        /// <returns>
+        /// A <see cref="PaginationItem{T}"/> containing the paged items and pagination metadata.
+        /// </returns>
+        /// <remarks>
+        /// This method normalizes invalid pagination parameters by applying default values,
+        /// executes the query using skip/take semantics, and maps the source entities to the
+        /// specified destination type.
+        /// </remarks>
+        public async Task<PaginationItem<T>> PaginationAsync<T>(PaginationRequest pageRequest, CancellationToken cancellationToken = default) where T : new()
+        {
+            int pageNumber = pageRequest.PageNumber <= 0 ? 1 : pageRequest.PageNumber;
+            int pageSize = pageRequest.PageSize <= 0 ? 10 : pageRequest.PageSize;
+            int totalCount = await queryable.CountAsync(cancellationToken);
+            
+            var items = await queryable
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .MapTo<TE, T>()
+                .ToListAsync(cancellationToken);
+            return new PaginationItem<T>(items, pageNumber, pageSize, totalCount);
         }
     }
 
