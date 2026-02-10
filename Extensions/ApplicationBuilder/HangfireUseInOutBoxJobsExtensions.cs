@@ -38,5 +38,10 @@ public static class JobScheduler
             "Messaging.Outbox.Cleanup", 
             job => job.CleanJobAsync(CancellationToken.None, 7), 
             Cron.DayInterval(1));
+        
+        recurringJobManager.AddOrUpdate<InboxCleanupJob>(
+                "Messaging.Inbox.Cleanup",
+                job=> job.CleanJobAsync(CancellationToken.None, 7),
+                Cron.DayInterval(1));
     }
 }
