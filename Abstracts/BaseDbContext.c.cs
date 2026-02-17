@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using NIK.CORE.DOMAIN.Configs;
 using NIK.CORE.DOMAIN.Contracts;
 using NIK.CORE.DOMAIN.Helpers;
 using NIK.CORE.DOMAIN.Inbox;
@@ -61,6 +62,24 @@ public abstract class BaseDbContext : DbContext, IUnitOfWork
     /// </remarks>
     public DbSet<OutboxMessage> OutboxMessages { get; set; }
     /// <summary>
+    /// Gets or sets the DbSet for configuration keys.
+    /// </summary>
+    /// <remarks>
+    /// Represents the collection of configuration key entities stored in the database.
+    /// Configuration keys define the available configuration entries.
+    /// </remarks>
+    public DbSet<ConfigKey> ConfigKeys { get; set; }
+
+    /// <summary>
+    /// Gets or sets the DbSet for configuration values.
+    /// </summary>
+    /// <remarks>
+    /// Represents the collection of configuration value entities stored in the database.
+    /// Configuration values store the actual values associated with configuration keys,
+    /// potentially varying by environment, tenant, or scope.
+    /// </remarks>
+    public DbSet<ConfigValue> ConfigValues { get; set; }
+    /// <summary>
     /// Configures model-wide conventions applied during model creation.
     /// </summary>
     /// <param name="configurationBuilder">
@@ -109,7 +128,7 @@ public abstract class BaseDbContext : DbContext, IUnitOfWork
     /// <returns>
     /// The number of state entries written to the database.
     /// </returns>
-    public async Task<int> SaveChangeAsync(CancellationToken cancellationToken)
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         => await base.SaveChangesAsync(cancellationToken);
 
     /// <summary>

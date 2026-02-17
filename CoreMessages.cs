@@ -24,4 +24,9 @@ public static class CoreMessages
     public const string ExpiredTime = "core.validation.expired_time";
     public const string InvalidImageUri = "core.validation.invalid_image_uri";
     
+    // message for config
+    public const string NotExitConfigKey = "core.config.not_exit_config_key";
+    public const string ExitConfigKey = "core.config.exit_config_key";
+    public const string ExitConfigValue = "core.config.exit_config_value";
+    
 }

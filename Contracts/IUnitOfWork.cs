@@ -30,7 +30,7 @@ public interface IUnitOfWork : IAsyncDisposable
     /// <returns>
     ///     The number of state entries written to the database.
     /// </returns>
-    Task<int> SaveChangeAsync(CancellationToken cancellationToken);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     /// <summary>
     ///     Commits the current transaction.
     ///     All changes will be permanently applied to the database.
